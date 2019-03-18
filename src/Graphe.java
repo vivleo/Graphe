@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -64,6 +61,7 @@ public class Graphe {
             }
         }
     }
+
     public void parcours(){
         for (Noeud n : this.noeuds){
             boolMap.put(n.getId(),false);
@@ -74,6 +72,7 @@ public class Graphe {
             }
         }
     }
+
     public void profR(Noeud n, int cmptr){
         boolMap.replace(n.getId(),true);
         System.out.println(n.toString());
@@ -87,17 +86,40 @@ public class Graphe {
         }
     }
 
+
+
+    public void export(){
+        String buff="Source,Target\n";
+        String sep=",";
+        for (Noeud n : this.noeuds){
+            for (Arc a : n.getSucc()){
+                buff+=a.getSrc().getId() + sep + a.getTarg().getId() + "\n";
+            }
+        }
+        File outputFile=new File(this.getClass() + ".csv");
+        FileWriter out;
+        try{
+            out = new FileWriter(outputFile);
+            out.write(buff);
+            out.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public String toString(){
         String resu="";
         for (Noeud n:noeuds){
             resu+=n.toString()+" : ";
             for (Arc a:n.getSucc()){
-                resu+=a.getTarg().toString();
+                resu+=a.getTarg().toString()+" ";
             }
             resu+="\n";
         }
         return resu;
     }
+
+
 
 }

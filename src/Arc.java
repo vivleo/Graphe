@@ -14,4 +14,6 @@ public class Arc {
     public Noeud getTarg(){
         return this.targ;
     }
+
+    public Noeud getSrc(){ return this.src;}
 }
